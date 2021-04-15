@@ -17,7 +17,8 @@ RUN apt-get update && apt-get -y install \
     mcrypt \
     build-essential \
     tcl8.5 \
-    git
+    git \
+    apache2-utils
 
 RUN apt-add-repository ppa:ondrej/php
 
@@ -56,10 +57,14 @@ VOLUME ["/etc/nginx/certs", "/etc/nginx/conf.d", "/var/www/html"]
 ARG YANG_ID
 ARG YANG_GID
 ARG NGINX_FILES
+ARG PRIVATE_PASSWORD
+ARG PRIVATE_ADMIN
 
 ENV YANG_ID "$YANG_ID"
 ENV YANG_GID "$YANG_GID"
 ENV NGINX_FILES "$NGINX_FILES"
+ENV PRIVATE_PASSWORD "$PRIVATE_PASSWORD"
+ENV PRIVATE_ADMIN "$PRIVATE_ADMIN"
 
 RUN groupadd -g ${YANG_GID} -r yang \
   && useradd --no-log-init -r -g yang -u ${YANG_ID} -m -d /home/yang yang
@@ -92,6 +97,8 @@ COPY ./resources/rsyncd.conf /etc/rsyncd.conf
 
 RUN /etc/init.d/xinetd start
 RUN ln -s /usr/share/nginx/html/stats/statistics.html /usr/share/nginx/html/statistics.html
+
+RUN htpasswd -cbB -C 17 /etc/nginx/.htpasswd ${PRIVATE_ADMIN} ${PRIVATE_PASSWORD}
 
 RUN chown -R yang:yang /usr/share/nginx/html
 
