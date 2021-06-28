@@ -2,6 +2,14 @@
 
 * ##### vm.m.p - 2021-MM-DD
 
+* ##### v3.2.1 - 2021-05-04
+
+  * No changes - released with other [deployment submodules](https://github.com/YangCatalog/deployment)
+
+* ##### v3.2.0 - 2021-04-15
+
+  * No changes - released with other [deployment submodules](https://github.com/YangCatalog/deployment)
+
 * ##### v3.1.0 - 2021-03-18
 
   * Added missing static image [#13](https://github.com/YangCatalog/web_root/issues/13)
